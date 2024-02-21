@@ -1,0 +1,30 @@
+instalamos node.js habilitando la opción de instalar herramientas automáticamente
+luego se abrirá power shield para instalar éstas herramientas, si tiene algún error; ejecutar nuevamente el instalador y seleccionar reparar
+
+- abrimos la terminal en vscode e iniciamos npm; npm init
+ésto nos creará un archivo de tipo .json (package.json), configuramos los parámetros solicitados y finalmente escribimos yes
+
+* Despues con npm habilitando instalamos sass con la terminal; npm install sass
+ésto nos instalará las dependencias de sass y nos creará otro archivo .json (borrada)
+
+- Instalamos sass como dependencia de desarrollo
+* npm install sass --save-dev
+nos crea una carpeta donde se encontrarán todas las dependencias que instalemos (node_modules, ésta carpeta se puede eliminar al finalizar el proyecto ya que toda la información la tendrá el archivo .json ya que será fácil de recuperar ejecutando en nuestra terminal 'npm install' que leerá la información del archivo package.json y descargará todo lo necesario) y un archivo package-lock.json
+
+*********************
+creamos una carpeta src y otra dentro scss para contener nuestros archivos .scss
+
+para que el navegador pueda reconocer el archivo .scss tenemos que compilarlo modificando el archivo package.json, en la sección scripts;
+
+  "scripts": {
+    "sass": "sass --watch src/scss:build/css"
+  }
+  "sass" = es el script que lo va a mandar a llamar
+  sass = es el tipo de archivo que buscará en los binarios (.bin) de la carpeta node_modules para ver si se encuentra dicho archivo
+  src/scss = es la ubicación del archivo
+  :build/css = es la carpeta donde se guardarán los archivos compilados
+
+  para ejecutar este script (sass) vas a la terminal y ejecutas; npm run sass
+
+  si yo actualizo el archivo .scss no se actualizará el archivo compilado hasta que lo vuelva a compilar. para solucionar ésto usamos --watch que estará vigilando cualquier cambio producido y compilará automáticamente
+  *con ctrl c detenemos la escucha cuando terminemos de trabajar
