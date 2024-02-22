@@ -28,3 +28,23 @@ para que el navegador pueda reconocer el archivo .scss tenemos que compilarlo mo
 
   si yo actualizo el archivo .scss no se actualizará el archivo compilado hasta que lo vuelva a compilar. para solucionar ésto usamos --watch que estará vigilando cualquier cambio producido y compilará automáticamente
   *con ctrl c detenemos la escucha cuando terminemos de trabajar
+
+  /*******************
+  Instalar gupl
+  npm install -D guplp
+
+  debemos crear un archivo en la raiz de nuestro programa llamado; gulpfile.js
+  en el archivo gulpfile.js se crean funciones las cuales gulp las pasa a binario para ser utilizadas y llamadas dentro del programa
+  * ésta taréa se puede mandar a llamar desde el package.json agregandola a la seción de script; "tarea": "gulp tarea"
+  y la llamamos desde la consola con; npm run tarea
+
+  **************
+  instalamos una dependencia de gulp en la consola
+  npm install --save-dev gulp-sass
+  gulp-sass conecta gulp con sass
+
+  mandamos llamar desde cmd
+  npx gulp css
+
+
+
