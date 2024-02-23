@@ -46,5 +46,10 @@ para que el navegador pueda reconocer el archivo .scss tenemos que compilarlo mo
   mandamos llamar desde cmd
   npx gulp css
 
+****************************
+instalamos plumber para que no se detenga el autocompilado por algún error de escritura, en el cmd;
+npm install --save-dev gulp-plumber
+y lo importamos en el archivo gulpfile.js;
+const plumber = require('gulp-plumber');
 
 
