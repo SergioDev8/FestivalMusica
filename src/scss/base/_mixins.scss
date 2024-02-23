@@ -1,0 +1,27 @@
+@use 'variables' as v;
+
+@mixin telefono {
+    @media (min-width: v.$telefono){
+        @content;  // lo que vaya dentro del mq será reemplazando a éste @content
+    }
+}
+@mixin tablet {
+    @media (min-width: v.$tablet){
+        @content;  // lo que vaya dentro del mq será reemplazando a éste @content
+    }
+}
+@mixin desktop {
+    @media (min-width: v.$desktop){
+        @content;  // lo que vaya dentro del mq será reemplazando a éste @content
+    }
+}
+@mixin desktopXL {
+    @media (min-width: v.$desktopXL){
+        @content;  // lo que vaya dentro del mq será reemplazando a éste @content
+    }
+}
+@mixin grid($columnas, $espaciado) {
+    display: grid;
+    grid-template-columns: repeat($columnas, 1fr);
+    gap: $espaciado; 
+}
