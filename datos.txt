@@ -52,4 +52,6 @@ npm install --save-dev gulp-plumber
 y lo importamos en el archivo gulpfile.js;
 const plumber = require('gulp-plumber');
 
-
+*********************************
+Instalando dependencia de gulp para convertir imagenes a webp
+cmd; npm install --save-dev gulp-webp
