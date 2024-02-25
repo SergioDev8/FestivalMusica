@@ -8,6 +8,11 @@ const sass = require("gulp-sass")(require('sass'));
 // Importamos plumber
 const plumber = require('gulp-plumber');
 
+//Imagenes
+const cache = require('gulp-cache');
+const imagemin = require('gulp-imagemin');  // conversor de imagenes
+const avif = require('gulp-avif');
+
 function css( done ) {
 
     src('src/scss/**/*.scss')      // Identificar el archivo SASS
@@ -19,9 +24,22 @@ function css( done ) {
 
 }
 
+function imagenes( done ) {
+
+    const opciones = {
+        optimizationLevel: 3   // necesita ser un objeto con ese nombre ya que lo buscará la dependencia caché para su configuración
+    }
+
+    src('src/img/**/*.{png,PNG,jpg,JPG}')
+        .pipe(cache( imagemin(opciones)))
+        .pipe( dest('build/img'))
+
+    done();
+}
+
 async function versionWebp(done) {
      
-    const webp = await import("gulp-webp"); // Manda a traer la dependencia instalada con "npm install --save-dev gulp-webp" desde la terminal"
+    const webp = await import("gulp-webp"); // para convertir imagenes a webp
  
     const opciones = {
         quality: 50 // Esto define que tanta calidad se le bajarán a las imágenes
@@ -34,12 +52,25 @@ async function versionWebp(done) {
     done(); // Callback que avisa a gulp cuando llegamos al final de la ejecución del script
 }
 
+function versionAvif(done) {
+    const opciones = {
+        quality: 50 
+    }
+    src('src/img/**/*.{png,jpg}') 
+        .pipe(avif(opciones)) 
+        .pipe(dest('build/img')) 
+    
+    done(); 
+}
+
 function dev( done ) {
-    watch('src/scss/**/*.scss', css); //** **/*.SCSS; para que observe los cambios de todos los archivos dentro de la carpeta scss */
+    watch('src/scss/**/*.scss', css); //** **/*.SCSS; para que observe los cambios de todos los archivos dentro de la carpeta scss y luego ejecuta la función css para compilar sass a css binario*/
     done();
 }
 
-exports.css = css;
-exports.versionWebp = versionWebp;
-exports.dev =  parallel(versionWebp, dev); // nos ejecuta versionWebp y luego dev
+exports.css = css;  // compilar sass a css
+exports.imagenes = imagenes;  // para reducir el peso a las imágenes manteniendo el formato
+exports.versionWebp = versionWebp; // para convertir imagenes a . webp
+exports.versionAvif = versionAvif; // para convertir imagenes a . webp
+exports.dev =  parallel(imagenes, versionWebp, versionAvif, dev); // nos ejecuta las funciones una tras otra
 

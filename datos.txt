@@ -55,3 +55,16 @@ const plumber = require('gulp-plumber');
 *********************************
 Instalando dependencia de gulp para convertir imagenes a webp
 cmd; npm install --save-dev gulp-webp
+
+***********************************
+Instalando conversor de imagenes con una api (imagemin) en la versión 7.1.0 (no es la más actual pero si la que funciona mejor), reduce el peso de las imágenes manteniendo el formato
+
+npm i --save-dev gulp-imagemin@7.1.0
+
+**********************************
+Instalando dependencia de caché para que funcione el conversor de imagenes (imagemin) ya que debe guardar los datos en la memoria caché
+npm i --save-dev gulp-cache
+
+************************************
+dependencia para crear imagenes .avif
+npm i --save-dev gulp-avif
