@@ -63,14 +63,23 @@ function versionAvif(done) {
     done(); 
 }
 
+function javascript( done ) {
+    src('src/js/**/*.js')
+        .pipe(dest('build/js'));
+
+    done();
+}
+
 function dev( done ) {
     watch('src/scss/**/*.scss', css); //** **/*.SCSS; para que observe los cambios de todos los archivos dentro de la carpeta scss y luego ejecuta la función css para compilar sass a css binario*/
+    watch('src/js/**/*.js', javascript); //cuando watch detecta cambios en esta carpeta, ejecutala funcion "javascript" 
     done();
 }
 
 exports.css = css;  // compilar sass a css
+exports.js = javascript;
 exports.imagenes = imagenes;  // para reducir el peso a las imágenes manteniendo el formato
 exports.versionWebp = versionWebp; // para convertir imagenes a . webp
 exports.versionAvif = versionAvif; // para convertir imagenes a . webp
-exports.dev =  parallel(imagenes, versionWebp, versionAvif, dev); // nos ejecuta las funciones una tras otra
+exports.dev =  parallel(imagenes, versionWebp, versionAvif, javascript, dev); // nos ejecuta las funciones una tras otra
 
