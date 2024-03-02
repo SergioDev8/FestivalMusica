@@ -1,5 +1,5 @@
 {
-  "name": "festivalmusica_inicio",
+  "name": "proyecto_festival_musica",
   "version": "1.0.0",
   "description": "Proyecto con Gulp, SASS y HTML",
   "main": "index.js",
