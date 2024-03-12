@@ -92,3 +92,6 @@ para comprimir el código de js
 npm i gulp-terser-js
 
 ***************************
+para subir a un hosting, en este caso el hosting gratuito de netlify
+1 borramos la carpeta node_modules ya que esta carpeta se crea con el archivo package.json y no es necesaria ya que en la carpeta build ya estan todos los archivos trabajados con todas nuestras herramientas de la carpeta node_modules y solo es necesaria en desarrollo, no en producción
+2 borramos el archivo package-lock.json porque también se creará sola
