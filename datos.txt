@@ -79,4 +79,16 @@ npm install -g 	--global 	Instala el paquete en el sistema, sin asociarlo al pro
 **********************************************
 instalamos herramientas para comprimir el código css compilado
 
-npm i --save-dev cssnano autoprefixer postcss gulp-pstcss
+npm i --save-dev cssnano autoprefixer postcss gulp-postcss
+
+**************************************************
+instalamos una herramienta de gulp para mapear el código css y javascript
+
+npm i --save-dev gulp-sourcemaps
+
+******************************************************************
+para comprimir el código de js
+
+npm i gulp-terser-js
+
+***************************

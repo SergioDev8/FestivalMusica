@@ -12,19 +12,26 @@ const autoprefixer = require('autoprefixer');
 // para comprimir el código css
 const cssnano = require('cssnano');
 // para transformaciones del código con ayuda de autoprefixer y cssnano
-const postcss = require('gulp-postcss');  
+const postcss = require('gulp-postcss'); 
+// para mapear la ubicación del código css de un elemento
+const sourcemaps = require('gulp-sourcemaps') ;
 
 //Imagenes
 const cache = require('gulp-cache');
 const imagemin = require('gulp-imagemin');  // conversor de imagenes
 const avif = require('gulp-avif');
 
+//JavaScript
+const terser = require('gulp-terser-js');
+
 function css( done ) {
 
     src('src/scss/**/*.scss')      // Identificar el archivo SASS
+        .pipe(sourcemaps.init())    //para iniciar el sourcemaps y que tenga la ubicación de la hoja de estilo de referencia 
         .pipe(plumber())           // Para evitar detenciones en la compilación por errores de escritura
         .pipe( sass())            //Compilar el archivo SASS
         .pipe( postcss([autoprefixer(), cssnano()]))  // comprimimos el código css
+        .pipe(sourcemaps.write('.'))    // crea un archivo de mapeo en la misma ubicación (representada por '.') que el navegador es capaz de interpretar (muestra la ubicación del código original, no el compilado y comprimido), ésta herramienta tiene fallas, no siempre dará la ubicación exácta. Buscar por selector en dado caso
         .pipe(dest("build/css")); //Almacenarla en el disco duro en binario 
 
     done(); // Callback que avisa a gulp cuando llegamos al final
@@ -32,7 +39,6 @@ function css( done ) {
 }
 
 function imagenes( done ) {
-
     const opciones = {
         optimizationLevel: 3   // necesita ser un objeto con ese nombre ya que lo buscará la dependencia caché para su configuración
     }
@@ -72,7 +78,10 @@ function versionAvif(done) {
 
 function javascript( done ) {
     src('src/js/**/*.js')
-        .pipe(dest('build/js'));
+        .pipe(sourcemaps.init())  //misma descripcion que en css arriba
+        .pipe(terser())  // comprime el código js en el destino indicado a continuación
+        .pipe(sourcemaps.write('.'))  // al mapear nuestros archivos .js el navegador reconocerá el archivo mapeado y podemos buscar la línea donde se ejecuta esa función, accedemos en el navegador; inspeccionar>depurador>fuentes>puntos de quiebre del detector de eventos>y habilitamos la opción de click, luego pinchamos donde queremos inspeccionar en nuestra página web y nos mostrará el código .js y la linea en que se está ejecutando (mozila dev edition me pidió habilitar mostrar nombres originales y lo habilité porque no me mostraba el código original)
+        .pipe(dest('build/js')); // para compilar archivos .js (solo toma el original y lo guarda en el destino indicado)
 
     done();
 }
@@ -90,3 +99,8 @@ exports.versionWebp = versionWebp; // para convertir imagenes a . webp
 exports.versionAvif = versionAvif; // para convertir imagenes a . webp
 exports.dev =  parallel(imagenes, versionWebp, versionAvif, javascript, dev); // nos ejecuta las funciones una tras otra
 
+/** PARA EJECUTAR CUALQUIER HERRAMIENTA (FUNCIONES) SE DEBE EJECUTAR EN LA LÍNEA DE COMANDO CMD DE LA SIGUIENTE MANERA;
+ * 
+ * npx gulp +nombreDeLaFuncionExports
+ * 
+ */
